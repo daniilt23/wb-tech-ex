@@ -22,6 +22,6 @@ func main() {
 // название может быть и printSquare (так как делаем
 // 2 действия, но декомпозировать на еще 2 функции в такой задаче не вижу смысла)
 func calculateSquare(val int, wg *sync.WaitGroup) {
+	defer wg.Done()
 	fmt.Println(val * val)
-	wg.Done()
 }
