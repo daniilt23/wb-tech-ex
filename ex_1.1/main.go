@@ -23,6 +23,9 @@ func (a *Action) DoAction() {
 func main() {
 	h := Human{"Daniil", 19}
 	h.Greeting() //Hello my name is Daniil and im 19 years old
+
 	a := Action{h, "jump"}
-	a.DoAction() //Hello my name is Daniil and im 19 years old and im jump
+	a.Greeting()              //Hello my name is Daniil and im 19 years old
+	fmt.Printf("%d\n", a.Age) //19 (shorthand)
+	a.DoAction()              //Hello my name is Daniil and im 19 years old and im jump
 }
