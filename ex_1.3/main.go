@@ -9,16 +9,18 @@ func main() {
 		return
 	}
 
-	ch := make(chan bool)
+	ch := make(chan int)
 	for i := 0; i < workerCount; i++ {
-		go func(ch chan bool) {
+		go func() {
 			for val := range ch {
-				fmt.Printf("Worker %d take data %t\n", i, val)
+				fmt.Printf("Worker %d take data %d\n", i, val)
 			}
-		}(ch)
+		}()
 	}
 
+	it := 0
 	for {
-		ch <- true
+		ch <- it
+		it++
 	}
 }
