@@ -1,17 +1,17 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"time"
 )
 
-func writer(ctx context.Context, ch chan int) {
+func writer(timer <-chan time.Time, ch chan int) {
 	it := 0
 	for {
 		select {
-		case <-ctx.Done():
+		case <-timer:
 			fmt.Println("time is out")
+			close(ch)
 			return
 		default:
 			ch <- it
@@ -27,19 +27,12 @@ func main() {
 		return
 	}
 
-	//самым оптимальным будет просто завершать контекст по времени ввода
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(N)*time.Second)
-	defer cancel()
+	timer := time.After(time.Duration(N) * time.Second)
 
 	ch := make(chan int)
-	go writer(ctx, ch)
+	go writer(timer, ch)
 
-	for {
-		select {
-		case <-ctx.Done():
-			return
-		default:
-			fmt.Println(<-ch)
-		}
+	for val := range ch {
+		fmt.Println(val)
 	}
 }
