@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-func worker(stop_ch chan bool) {
+func worker(stop_ch chan bool, wg *sync.WaitGroup) {
+	defer wg.Done()
 	for {
 		select {
 		case <-stop_ch:
@@ -13,6 +15,7 @@ func worker(stop_ch chan bool) {
 			return
 		default:
 			fmt.Println("goroutine work")
+			time.Sleep(time.Nanosecond) // создаем задержку для процесса и меньшей нагрузки на CPU
 		}
 	}
 }
@@ -20,12 +23,14 @@ func worker(stop_ch chan bool) {
 func main() {
 	stop_ch := make(chan bool)
 
-	go worker(stop_ch)
+	var wg sync.WaitGroup
 
-	go func() {
-		time.Sleep(time.Microsecond * 100) // ждем время до прерывания канала уведомителя
-		stop_ch <- true
-	}()
+	wg.Add(1)
+	go worker(stop_ch, &wg)
 
-	time.Sleep(time.Millisecond) // даем время на завершение горутин
+	time.Sleep(time.Microsecond * 100) // ждем время до прерывания канала уведомителя
+	stop_ch <- true
+
+	wg.Wait() // точно дожимаемся выполнения горутины
+	fmt.Println("program finished")
 }
