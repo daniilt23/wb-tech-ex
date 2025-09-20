@@ -7,8 +7,8 @@ import (
 )
 
 type SafeCounter struct {
-	m  map[string]int
 	mu sync.Mutex
+	m  map[string]int
 }
 
 func (sc *SafeCounter) safeIncrement(key string) {
