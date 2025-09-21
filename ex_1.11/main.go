@@ -12,7 +12,7 @@ func main() {
 	}
 
 	for _, val := range sl2 {
-		if _, ok := set[val]; ok { // проверяем наличие ключей, если такие есть то повторение
+		if _, exists := set[val]; exists { // проверяем наличие ключей, если такие есть то повторение
 			final = append(final, val)
 		}
 	}
