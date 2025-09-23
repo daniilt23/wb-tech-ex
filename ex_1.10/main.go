@@ -19,8 +19,8 @@ func main() {
 	var key float64
 	for _, val := range mas {
 		key = floorByTen(val)              // находим ключ
-		map_val := groups[key]             // получаем текущий слайл для данной группы
-		groups[key] = append(map_val, val) // в конкретное значение мапы пишем данные из массива
+		mapValue := groups[key]             // получаем текущий слайл для данной группы
+		groups[key] = append(mapValue, val) // в конкретное значение мапы пишем данные из массива
 	}
 
 	fmt.Printf("%v", groups)

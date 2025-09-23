@@ -6,11 +6,11 @@ import (
 	"time"
 )
 
-func worker(stop_ch chan bool, wg *sync.WaitGroup) {
+func worker(stopCh chan bool, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for {
 		select {
-		case <-stop_ch:
+		case <-stopCh:
 			fmt.Println("end")
 			return
 		default:
@@ -21,15 +21,15 @@ func worker(stop_ch chan bool, wg *sync.WaitGroup) {
 }
 
 func main() {
-	stop_ch := make(chan bool)
+	stopCh := make(chan bool)
 
 	var wg sync.WaitGroup
 
 	wg.Add(1)
-	go worker(stop_ch, &wg)
+	go worker(stopCh, &wg)
 
 	time.Sleep(time.Microsecond * 100) // ждем время до прерывания канала уведомителя
-	stop_ch <- true
+	stopCh <- true
 
 	wg.Wait() // точно дожимаемся выполнения горутины
 	fmt.Println("program finished")

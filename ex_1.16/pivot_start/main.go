@@ -31,6 +31,6 @@ func partition(arr []int, low, high int) int {
 
 func main() {
 	mas := [15]int{2, 6, 5, 8, 9, 1, 3, 4, 7, 10, 17, 20, 11, 12, 13}
-	sorted_mas := quickSort(mas[:], 0, len(mas)-1)
-	fmt.Println(sorted_mas)
+	sortedMas := quickSort(mas[:], 0, len(mas)-1)
+	fmt.Println(sortedMas)
 }
