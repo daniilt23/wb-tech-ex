@@ -1,5 +1,7 @@
 package main
 
+// здесь я реализовал как вы и просили по условию чтобы опорный элемент был вначале но это очень неоптимально
+
 import "fmt"
 
 func quickSort(arr []int, low, high int) []int {
